@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Téléchargement de fichiers</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Téléchargement de fichiers</h1>
+    <p>nelsonemuhindo@gmail.com</p>
+    <input type="text" id="fileLink" placeholder="Collez le lien du fichier">
+    <button onclick="downloadFile()">Télécharger</button>
+    <div id="preview"></div>
+</div>
+
+<script src="script.js">
+
+function downloadFile() {
+    const fileLink = document.getElementById("fileLink").value;
+    
+    if (fileLink.trim() === "") {
+        alert("Veuillez saisir un lien de fichier valide.");
+        return;
+    }
+    
+    fetch(fileLink)
+        .then(response => response.blob())
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            const preview = document.getElementById("preview");
+            preview.innerHTML = <a href="${url}" download> Télécharger le fichier </a>;
+        })
+        .catch(error => {
+            console.error("Une erreur s'est produite lors du téléchargement du fichier :", error);
+            alert("Une erreur s'est produite lors du téléchargement du fichier. Veuillez réessayer.");
+        });
+}
+
+</script>
+</body>
+</html>
